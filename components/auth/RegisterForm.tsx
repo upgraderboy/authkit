@@ -1,7 +1,7 @@
 "use client";
 import CardWrapper from "./CardWrapper";
 import * as z from "zod";
-import {register} from "@/actions/Register"
+import { register } from "@/actions/Register"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -25,29 +25,29 @@ const RegisterForm = () => {
   })
 
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>)=>{
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
-   startTransition(()=>{
-    register(values).then((data)=>{
-      setError(data.error);
-      setSuccess(data.success);
-    });
-   })
+    startTransition(() => {
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    })
   }
   return (
     <CardWrapper headerLabel="Welcome Back!" backButtonHref="/auth/login" backButtonLabel="Already have an account ?" showSocial={true}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit((e) => onSubmit(e))} className="space-y-6">
           <div className="space-y-4">
-          <FormField control={form.control} name="name" render={({ field }) => {
+            <FormField control={form.control} name="name" render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="UBoy" type="text" disabled={isPending} />
                   </FormControl>
-
+                  <FormMessage />
                 </FormItem>
               )
             }} />
@@ -58,7 +58,7 @@ const RegisterForm = () => {
                   <FormControl>
                     <Input {...field} placeholder="***@gmail.com" type="email" disabled={isPending} />
                   </FormControl>
-
+                  <FormMessage />
                 </FormItem>
               )
             }} />
@@ -69,14 +69,14 @@ const RegisterForm = () => {
                   <FormControl>
                     <Input {...field} placeholder="****" type="password" disabled={isPending} />
                   </FormControl>
-
+                  <FormMessage />
                 </FormItem>
               )
             }} />
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full">{isPending ? "Loading" : "Login"}</Button>
+          <Button type="submit" className="w-full">{isPending ? "Loading" : "Register"}</Button>
         </form>
       </Form>
     </CardWrapper>);
